@@ -11,7 +11,20 @@ class MethodChannelHello extends HelloPlatform {
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version =
+        await methodChannel.invokeMethod<String>('getPlatformVersion');
+    return version;
+  }
+
+  @override
+  Future<bool?> startRecording() async {
+    final version = await methodChannel.invokeMethod<bool>('startRecording');
+    return version;
+  }
+
+  @override
+  Future<bool?> stopRecording() async {
+    final version = await methodChannel.invokeMethod<bool>('stopRecording');
     return version;
   }
 }

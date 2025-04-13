@@ -1,0 +1,53 @@
+PODS:
+  - camera_avfoundation (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - flutter_background_service_ios (0.0.3):
+    - Flutter
+  - hello (0.0.1):
+    - Flutter
+  - integration_test (0.0.1):
+    - Flutter
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - permission_handler_apple (9.3.0):
+    - Flutter
+
+DEPENDENCIES:
+  - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
+  - Flutter (from `Flutter`)
+  - flutter_background_service_ios (from `.symlinks/plugins/flutter_background_service_ios/ios`)
+  - hello (from `.symlinks/plugins/hello/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+
+EXTERNAL SOURCES:
+  camera_avfoundation:
+    :path: ".symlinks/plugins/camera_avfoundation/ios"
+  Flutter:
+    :path: Flutter
+  flutter_background_service_ios:
+    :path: ".symlinks/plugins/flutter_background_service_ios/ios"
+  hello:
+    :path: ".symlinks/plugins/hello/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+
+SPEC CHECKSUMS:
+  camera_avfoundation: 04b44aeb14070126c6529e5ab82cc7c9fca107cf
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_background_service_ios: 00d31bdff7b4bfe06d32375df358abe0329cf87e
+  hello: 2caa31f55c21c34cbfa8e0bceb13eb812fe3cb08
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
+  permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
+
+PODFILE CHECKSUM: 065624d1a4b38645ba003dbc72b59303fd641f01
+
+COCOAPODS: 1.16.2

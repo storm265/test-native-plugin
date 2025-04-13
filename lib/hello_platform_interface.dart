@@ -26,4 +26,12 @@ abstract class HelloPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<bool?> startRecording() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<bool?> stopRecording() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
 }

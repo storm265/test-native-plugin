@@ -31,7 +31,8 @@ dependencies:
   flutter_background_service:
   camera:
   path_provider:
-  
+  permission_handler:
+    
 dev_dependencies:
   integration_test:
     sdk: flutter
