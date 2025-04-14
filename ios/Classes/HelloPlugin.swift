@@ -8,6 +8,8 @@ public class HelloPlugin: NSObject, FlutterPlugin {
     var videoRecorder = CameraRecorder()
     
     
+    
+    
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "hello", binaryMessenger: registrar.messenger())
     let instance = HelloPlugin()
@@ -38,23 +40,27 @@ public class HelloPlugin: NSObject, FlutterPlugin {
   }
 
 }
-
-
 class CameraRecorder: NSObject {
     private var captureSession: AVCaptureSession?
     private var videoOutput: AVCaptureMovieFileOutput?
-    private var previewLayer: AVCaptureVideoPreviewLayer?
     private var outputURL: URL?
-
+    private var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier.invalid
+    
     override init() {
         super.init()
     }
-
+    
     func startRecording(result: @escaping FlutterResult) {
+        // Register background task to keep the app alive in the background
+        backgroundTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+            // If the background task expires, stop recording or handle any cleanup
+            self.stopRecording(result: result)
+        })
+        
         // Setup session
         captureSession = AVCaptureSession()
         captureSession?.sessionPreset = .high
-
+        
         // Get back camera
         guard let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                        for: .video,
@@ -64,25 +70,25 @@ class CameraRecorder: NSObject {
             result(FlutterError(code: "CAMERA_ERROR", message: "Cannot access back camera", details: nil))
             return
         }
-
+        
         if captureSession.canAddInput(input) {
             captureSession.addInput(input)
         }
-
-        // Setup output
+        
+        // Setup video output
         videoOutput = AVCaptureMovieFileOutput()
         if let videoOutput = videoOutput, captureSession.canAddOutput(videoOutput) {
             captureSession.addOutput(videoOutput)
         }
-
+        
         // Start session
         captureSession.startRunning()
-
+        
         // Start recording
         let tempDir = NSTemporaryDirectory()
-        let filePath = tempDir + UUID().uuidString + ".mov"
+        let filePath = tempDir + UUID().uuidString + ".mp4"
         outputURL = URL(fileURLWithPath: filePath)
-
+        
         if let outputURL = outputURL {
             videoOutput?.startRecording(to: outputURL, recordingDelegate: self)
             result(nil)  // success
@@ -90,14 +96,21 @@ class CameraRecorder: NSObject {
             result(FlutterError(code: "RECORD_ERROR", message: "Failed to start recording", details: nil))
         }
     }
-
+    
     func stopRecording(result: @escaping FlutterResult) {
         guard let videoOutput = videoOutput, videoOutput.isRecording else {
             result(FlutterError(code: "NOT_RECORDING", message: "Recording not started", details: nil))
             return
         }
-
+        
         videoOutput.stopRecording()
+        
+        // End the background task when recording stops
+        if backgroundTask != UIBackgroundTaskIdentifier.invalid {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backgroundTask = UIBackgroundTaskIdentifier.invalid
+        }
+        
         if let outputURL = outputURL {
             result(outputURL.absoluteString)
         } else {

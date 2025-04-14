@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:ui';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
@@ -18,7 +19,7 @@ class BackgroundService {
     initializeService();
   }
 
- static final camera =CameraRecorderService();
+  static final camera = CameraRecorderService();
 
   Future<void> initializeService() async {
     final service = FlutterBackgroundService();
@@ -30,11 +31,25 @@ class BackgroundService {
         isForegroundMode: true,
       ),
       iosConfiguration: IosConfiguration(
-        autoStart: false,
+        autoStart: true,
         onForeground: onStart,
-        onBackground: null,
+        onBackground: onIosBackground,
       ),
     );
+  }
+
+  @pragma('vm:entry-point')
+  Future<bool> onIosBackground(ServiceInstance service) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    DartPluginRegistrant.ensureInitialized();
+    debugPrint("background service");
+    final hello = Hello();
+
+    service.on('startRecording').listen((event) async {
+      final result = await hello.startRecording();
+    });
+
+    return true;
   }
 
   @pragma('vm:entry-point')
@@ -52,7 +67,6 @@ class BackgroundService {
 
     service.on('init').listen((event) async {
       final result = await hello.getPlatformVersion();
-     
     });
 
     service.on('startVideoRecording').listen((event) async {

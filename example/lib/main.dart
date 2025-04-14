@@ -77,21 +77,21 @@ class _MyAppState extends State<MyApp> {
               ),
               SizedBox(height: 30),
               ElevatedButton(
-                child: Text('start video from camea plugin'),
+                child: Text('start video from camera plugin'),
                 onPressed: () async {
                   final service = FlutterBackgroundService();
                   service.invoke('startVideoRecording');
                 },
               ),
               ElevatedButton(
-                child: Text('stop video from camea plugin'),
+                child: Text('stop video from camera plugin'),
                 onPressed: () async {
                   final service = FlutterBackgroundService();
                   service.invoke('stopVideoRecording');
                 },
               ),
               ElevatedButton(
-                child: Text('stop video from camea plugin'),
+                child: Text('stop video from camera plugin'),
                 onPressed: () async {
                   final service = FlutterBackgroundService();
                   service.invoke('stopVideoRecording');
